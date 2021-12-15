@@ -10,7 +10,7 @@ server.listen(4444);
 describe('server/app.js', function() {
   this.timeout(5000);
   beforeEach((done) => {
-    
+
     done();
   });
 
@@ -36,5 +36,17 @@ describe('server/app.js', function() {
       expect(JSON.stringify(res.text)).to.contain('Hello World');
       done();
     });
+  });
+
+  it(`page says You're serving up the public folder, but do your tests pass?`, (done) => {
+    chai
+      .request(server)
+      .get("/")
+      .end((err, res) => {
+        expect(err).not.exist;
+        expect(JSON.stringify(res.text)).to.contain(
+          `You're serving up the public folder, but do your tests pass?`);
+        done();
+      });
   });
 })
